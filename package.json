@@ -14,5 +14,14 @@
   "dependencies": {
     "express": "^5.2.1",
     "sqlite3": "^6.0.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marretto/sterilisation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Marretto/sterilisation/issues"
+  },
+  "homepage": "https://github.com/Marretto/sterilisation#readme"
 }

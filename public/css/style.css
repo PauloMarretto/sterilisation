@@ -34,6 +34,19 @@ header {
     margin-bottom: 30px;
 }
 
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.header-logo {
+    max-width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+
 h1 {
     font-size: 28px;
     color: var(--primary-color);
