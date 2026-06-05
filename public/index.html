@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registre de stérilisation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container no-print">
+    <header>
+        <h1>🔬 Registre de stérilisation</h1>
+        <div class="tagline">Enregistrez les données à la fin de chaque cycle.</div>
+    </header>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchScreen('archives')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            Archives <span class="counter-badge" id="archiveCount">0</span>
+        </button>
+        <button class="nav-btn" onclick="switchScreen('autoclaves')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>
+            Autoclaves
+        </button>
+        <button class="nav-btn" onclick="switchScreen('responsables')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Responsables
+        </button>
+        <button class="nav-btn" onclick="switchScreen('rapports')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            Rapports
+        </button>
+    </nav>
+
+    <!-- SCREEN: ARCHIVES -->
+    <div id="screen-archives" class="screen active">
+        <div class="archive-layout-wrapper">
+            <div class="archive-main">
+                <h2>Registre de Ciclo <span id="recordStatus" style="font-size:13px; font-weight:normal; color:var(--text-muted); float:right;">Nouveau</span></h2>
+                
+                <form id="archiveForm" onsubmit="event.preventDefault();">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="archAutoclave">Autoclave</label>
+                            <select id="archAutoclave" required>
+                                <option value="">Sélectionnez...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="archResponsable">Responsable</label>
+                            <select id="archResponsable" required>
+                                <option value="">Sélectionnez...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="archCycle">Cycle</label>
+                            <input type="number" id="archCycle" min="0" max="99999" placeholder="ex: 00001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="archDate">Date</label>
+                            <input type="date" id="archDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="archValidate">Validité</label>
+                            <input type="date" id="archValidate" required>
+                            <div class="days-shortcut">
+                                <button type="button" class="btn-shortcut" onclick="calculateValidity(30)">30j</button>
+                                <button type="button" class="btn-shortcut" onclick="calculateValidity(60)">60j</button>
+                                <button type="button" class="btn-shortcut" onclick="calculateValidity(90)">90j</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="archTemperature">Température (°C)</label>
+                            <input type="number" id="archTemperature" step="0.1" min="0" max="999.9" placeholder="ex: 134.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="archPression">Pression (bar)</label>
+                            <input type="number" id="archPression" step="0.01" min="0" max="9.99" placeholder="ex: 2.10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="archQuantite">Quantité</label>
+                            <input type="number" id="archQuantite" min="1" placeholder="ex: 12" required>
+                        </div>
+                    </div>
+
+                    <div class="action-bar">
+                        <div class="action-group-left">
+                            <button type="button" id="btnEnregistrer" class="btn btn-primary" onclick="handleSave()">Enregistrer</button>
+                            <button type="button" id="btnAnnuler" class="btn btn-secondary" onclick="handleClearForm()">Annuler</button>
+                            <button type="button" id="btnModifier" class="btn btn-secondary btn-disabled" onclick="handleModify()">Modifier</button>
+                            <button type="button" id="btnEteindre" class="btn btn-danger btn-disabled" onclick="handleDeleteRecord()">Éteindre</button>
+                        </div>
+                        <button type="button" id="btnImprimer" class="btn btn-secondary btn-disabled" onclick="handlePrintLabels()">
+                            Imprimer les étiquettes
+                        </button>
+                    </div>
+
+                    <!-- Navigation arrows moved below action bar -->
+                    <div class="archive-nav-sidebar-bottom">
+                        <button type="button" class="btn-nav-arrow" title="Registre précédent" onclick="navigateRecord(-1)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button type="button" class="btn-nav-arrow" title="Registre suivant" onclick="navigateRecord(1)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN: AUTOCLAVES -->
+    <div id="screen-autoclaves" class="screen">
+        <h2>Gestion des Autoclaves</h2>
+        <div class="two-columns">
+            <div>
+                <label style="display:block; margin-bottom:8px;">Autoclaves :</label>
+                <div id="autoclaveListBox" class="list-box"></div>
+            </div>
+            <div class="right-buttons-stack">
+                <button class="btn btn-primary" onclick="openModal('autoclave')">Ajouter</button>
+                <button class="btn btn-danger" onclick="deleteSelectedMaster('autoclave')">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN: RESPONSABLES -->
+    <div id="screen-responsables" class="screen">
+        <h2>Gestion des Responsables</h2>
+        <div class="two-columns">
+            <div>
+                <label style="display:block; margin-bottom:8px;">Responsables :</label>
+                <div id="responsableListBox" class="list-box"></div>
+            </div>
+            <div class="right-buttons-stack">
+                <button class="btn btn-primary" onclick="openModal('responsable')">Ajouter</button>
+                <button class="btn btn-danger" onclick="deleteSelectedMaster('responsable')">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN: RAPPORTS -->
+    <div id="screen-rapports" class="screen">
+        <h2>📊 Rapports de Stérilisation</h2>
+        <p class="report-desc">Veuillez préciser les dates de début et de fin.</p>
+        
+        <div class="form-grid" style="max-width: 600px; margin-bottom: 20px;">
+            <div class="form-group">
+                <label for="repDateDebut">Date de début</label>
+                <input type="date" id="repDateDebut">
+            </div>
+            <div class="form-group">
+                <label for="repDateFin">Date de fin</label>
+                <input type="date" id="repDateFin">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="repDateJour" onclick="handleDateJourCheckbox(this)">
+                    <label for="repDateJour" style="font-weight: normal; font-size: 13px;">Date du jour</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="generateReport()">Générer un rapport</button>
+
+        <!-- Preview Table inside Screen -->
+        <div id="reportTableContainer" class="report-container">
+            <div class="report-header">
+                <h3 id="reportTitle"></h3>
+                <p id="reportPeriod"></p>
+            </div>
+            <table class="report-table" id="uiReportTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Autoclave</th>
+                        <th>Responsable</th>
+                        <th>Cycle</th>
+                        <th>Validité</th>
+                        <th>Temp (°C)</th>
+                        <th>Pression (bar)</th>
+                        <th>Qté</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="report-footer">
+                <p id="reportStats"></p>
+                <button class="btn btn-secondary" onclick="printReportDocument()">📄 Imprimer le rapport en PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- UNIVERSAL INPUT MODAL POPUP -->
+<div id="inputModal" class="modal-overlay">
+    <div class="modal-content">
+        <div id="modalTitle" class="modal-title">Nouvelle Autoclave</div>
+        <div class="form-group">
+            <label id="modalLabel" for="modalInput">Nom</label>
+            <input type="text" id="modalInput" autocomplete="off">
+        </div>
+        <div class="modal-buttons">
+            <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+            <button class="btn btn-primary" onclick="saveModalInput()">Gravar</button>
+        </div>
+    </div>
+</div>
+
+<!-- EXCLUSIVE PRINTING OUT-OF-DOM TARGET AREA FOR PDF GENERATION -->
+<div id="printReportArea"></div>
+
+<script src="scripts/script.js"></script>
+
+</body>
+</html>
