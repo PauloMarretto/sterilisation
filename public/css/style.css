@@ -465,6 +465,15 @@ input:focus, select:focus {
 
 /* Print Styles */
 @media print {
+    @page {
+        margin: 10mm; /* Margem uniforme */
+        /* Ou margens individuais: */
+        /* margin-top: 10mm;
+           margin-right: 10mm;
+           margin-bottom: 10mm;
+           margin-left: 10mm; */
+    }
+
     body {
         padding: 0;
     }
