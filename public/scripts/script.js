@@ -447,7 +447,8 @@ function printReportDocument() {
     printArea.innerHTML = `
         <div style="padding: 30px; font-family: 'Segoe UI', sans-serif;">
             <h1 style="font-size: 24px; color: #0b192c; border-bottom: 2px solid #0b192c; padding-bottom: 10px; margin-bottom: 20px;">
-                🔬 Rapport de Stérilisation
+                
+                <img src="img/logo.png" alt="Logo Dr. Brigatto Cássia" class="header-logo"> Rapport de Stérilisation
             </h1>
             <p style="margin-bottom: 10px; color: #666; font-size: 12px;">
                 <strong>Période:</strong> ${new Date(debut).toLocaleDateString('fr-FR')} au ${new Date(fin).toLocaleDateString('fr-FR')}
