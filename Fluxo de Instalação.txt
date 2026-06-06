@@ -1,0 +1,44 @@
+Fluxo de Instalação
+
+[Usuário clica em install.bat]
+           ↓
+[Script verifica Node.js] 
+           ↓
+[Se não tiver → Instala automaticamente]
+           ↓
+[Script verifica Git]
+           ↓
+[Se não tiver → Instala automaticamente]
+           ↓
+[Clone do repositório]
+           ↓
+[npm install]
+           ↓
+[Cria atalho na Área de Trabalho]
+           ↓
+[Instalação concluída! ✅]
+
+GIT
+Para fazer o commit:
+
+cd "PATH/Folder"
+
+git add install.bat iniciar.bat INSTALL_WINDOWS.md
+
+git commit -m "docs: Adicionar scripts de instalação automática para Windows
+
+- install.bat: Instalador completo (Node.js, Git, clone, dependências)
+- iniciar.bat: Script para iniciar servidor
+- INSTALL_WINDOWS.md: Guia passo a passo
+
+Funcionalidades:
+✅ Instalação totalmente automatizada
+✅ Detecta e instala Node.js se necessário
+✅ Detecta e instala Git se necessário
+✅ Clona repositório automaticamente
+✅ Instala dependências npm
+✅ Cria atalhos na Área de Trabalho
+✅ Inclui guia completo de instalação"
+
+git push origin main
+
