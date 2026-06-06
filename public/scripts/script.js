@@ -444,10 +444,11 @@ function printReportDocument() {
     `;
     
     const printArea = document.getElementById('printReportArea');
+    printArea.classList.add('visible');
     printArea.innerHTML = `
         <div style="padding: 30px; font-family: 'Segoe UI', sans-serif;">
             <h1 style="font-size: 24px; color: #0b192c; border-bottom: 2px solid #0b192c; padding-bottom: 10px; margin-bottom: 20px;">
-                <img src="img/logo.png" alt="Logo Dr. Brigatto Cássia" class="header-logo"> Rapport de Stérilisation
+                🔬 Rapport de Stérilisation
             </h1>
             <p style="margin-bottom: 10px; color: #666; font-size: 12px;">
                 <strong>Période:</strong> ${new Date(debut).toLocaleDateString('fr-FR')} au ${new Date(fin).toLocaleDateString('fr-FR')}
@@ -463,4 +464,18 @@ function printReportDocument() {
     `;
 
     window.print();
+    
+    // Ocultar printReportArea após impressão
+    /* setTimeout(() => {
+        printArea.classList.remove('visible');
+    }, 500); */
+
+    // Adicionar class 'visible' antes de imprimir
+    printArea.classList.add('visible');
+
+    // Remover class 'visible' após impressão
+    setTimeout(() => {
+        printArea.classList.remove('visible');
+    }, 500);
+    
 }

@@ -2,9 +2,12 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
+// require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
+// const PORT = process.env.PORT || 3000;
+
 
 // Middleware para interpretar JSON e servir os arquivos estáticos do front-end
 app.use(express.json());
@@ -12,6 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Caminho absoluto para a subpasta DB e o arquivo sterilisation.db
 const dbPath = path.join(__dirname, 'DB', 'sterilisation.db');
+//const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'DB', 'sterilisation.db');
 
 // Verificar se a pasta DB existe, se não, criar
 if (!fs.existsSync(path.join(__dirname, 'DB'))) {
