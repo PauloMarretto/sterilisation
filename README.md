@@ -15,27 +15,47 @@ A base de dados e em SQLite
 O arquivo INSTALL_WINDOWS.md é o roteiro:
 
 ✅ Instruções detalhadas
+
 ✅ Instalação automática vs manual
+
 ✅ Solução de problemas
+
 ✅ Próximos passos
+
 
 Fluxo de Instalação
 
 [Usuário clica em install.bat]
+
            ↓
+
 [Script verifica Node.js] 
+
            ↓
+
 [Se não tiver → Instala automaticamente]
+
            ↓
+
 [Script verifica Git]
+
            ↓
+
 [Se não tiver → Instala automaticamente]
+
            ↓
+
 [Clone do repositório]
+
            ↓
+
 [npm install]
+
            ↓
+
 [Cria atalho na Área de Trabalho]
+
            ↓
+
 [Instalação concluída! ✅]
 
