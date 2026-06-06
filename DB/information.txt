@@ -1,0 +1,5 @@
+O arquivo da base de dados será criado automaticamente ao primeiro inicio da aplicação.
+
+The database file will be created automatically the first time the application starts.
+
+Le fichier de base de données sera créé automatiquement lors du premier démarrage de l'application.
