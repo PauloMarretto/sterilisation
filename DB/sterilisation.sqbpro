@@ -2,3 +2,4 @@
             &quot;id&quot; INTEGER PRIMARY KEY AUTOINCREMENT,
             &quot;nom&quot; TEXT NOT NULL UNIQUE,
             &quot;cree_dans&quot; TIMESTAMP NOT NULL DEFAULT current_timestamp );</sql><current_tab id="0"/></tab_sql></sqlb_project>
+ 
